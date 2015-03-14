@@ -5,6 +5,7 @@
 #define SNAKE_INIT_SIZE 3
 #define SNAKE_CHAR S
 #define SNAKE_HEAD_CHAR H
+#define FODD_CHAR F
 #define SNAKE_MAX_SIZE 200
 
 typedef struct {
@@ -72,11 +73,28 @@ void gameInit() {
 }
 
 void printField() {
+	int i, j;
 
+	for ( i = 0; i < FIELD_SIZE; i++ ) {
+		for ( j = 0; i < FIELD_SIZE; j++ ) {
+			if ( field[i][j] == 0 ) {
+				printw(' ');
+			}
+			else if ( field[i][j] == -1 ) {
+				printw(SNAKE_CHAR);
+			}
+			else if ( field[i][j] == 1 ) {
+				printw(FOOD_CHAR);
+			}
+		}
+	}
 }
 
 int gameLoop() {
+	printField();
+	while(1){
 
+	}
 }
 
 int main() {
@@ -91,11 +109,12 @@ int main() {
 	nodelay(stdscr, TRUE);
 	noecho();
 
+	gameInit();
+	gameLoop();
+
 	refresh();			/* Print it on to the real screen */
 	getch();			/* Wait for user input */
 	endwin();			/* End curses mode		  */
-
-	return 0;
 
 	return 0;
 }
