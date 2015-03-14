@@ -150,7 +150,7 @@ void checkWallCol() {
 int checkSnakeCol() {
 	int i;
 
-	for ( i = 0; i < snakeSize; i++ ) {
+	for ( i = 1; i < snakeSize; i++ ) {
 		if ( snake[0].pos.x == snake[i].pos.x && snake[0].pos.y == snake[i].pos.y ) {
 			return true;
 		}
@@ -166,16 +166,18 @@ void snakeGrowth() {
 
 void gameInit() {
 	int i, j;
-	
+
+	snakeSize = 3;
+	points = 0;
 	for ( i = 0; i < FIELD_SIZE; ++i) 	{
 		for ( j = 0; j < FIELD_SIZE; j++ ) {
 			field[i][j] = 0;
 		}
 	}
-
+	snakeDirection = right;
 	for ( i = 0; i < SNAKE_INIT_SIZE; i++ ) {
-		snake[i].pos.x = 4 - i;
-		snake[i].pos.y = 1;
+		snake[i].pos.y = 4 - i;
+		snake[i].pos.x = 1;
 	}
 
 	generateFood();
@@ -243,6 +245,7 @@ int gameLoop() {
 		snakeMove();
 		usleep(200000);
 	}
+	printw("\nYou have lost. You have earned %i points. You ROCK MAN !!\n", points);
 }
 
 int main() {
@@ -256,9 +259,14 @@ int main() {
 	//if a key is pressed it reads it
 	nodelay(stdscr, TRUE);
 	noecho();
-	gameInit();
-	gameLoop();
-	usleep(10000000000);		/* Print it on to the real screen */
+	while ( ch != 'q') {
+		gameInit();
+		gameLoop();
+		printw("Press q to quit, or anyhting else to play again !");
+		nodelay(stdscr, FALSE);
+		ch = getch();
+		nodelay(stdscr, TRUE);
+	}
 	endwin();			/* End curses mode		  */
 
 	return 0;
