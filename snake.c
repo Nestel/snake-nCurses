@@ -150,7 +150,7 @@ void checkWallCol() {
 int checkSnakeCol() {
 	int i;
 
-	for ( i = 0; i < SNAKE_SIZE; i++ ) {
+	for ( i = 0; i < snakeSize; i++ ) {
 		if ( snake[0].pos.x == snake[i].pos.x && snake[0].pos.y == snake[i].pos.y ) {
 			return true;
 		}
@@ -230,7 +230,7 @@ void printField() {
 }
 
 int gameLoop() {
-	while(1){
+	while(!checkSnakeCol()){
 		clear();
 		recreateField();
 		printField();
